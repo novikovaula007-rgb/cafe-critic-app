@@ -86,7 +86,7 @@ placesRouter.get('/:id', async (req, res, next) => {
   }
 
   try {
-    const place = await Place.findById(req.params.id).populate('user');
+    const place = await Place.findById(id).populate('user');
 
     if (!place) {
       return res.status(404).json({ error: 'Place not found' });
