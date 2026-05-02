@@ -42,6 +42,7 @@ const UserSchema = new Schema<
     type: String,
     required: true,
     min: 5,
+    select: false,
   },
   role: {
     type: String,
@@ -50,6 +51,7 @@ const UserSchema = new Schema<
   },
   refreshToken: {
     type: String,
+    select: false,
   },
 });
 
@@ -62,8 +64,12 @@ UserSchema.pre('save', async function () {
 
 UserSchema.set('toJSON', {
   transform(_doc, ret, _options) {
-    const { password, __v, refreshToken, ...user } = ret;
-    return user;
+    return {
+      _id: ret._id,
+      email: ret.email,
+      displayName: ret.displayName,
+      role: ret.role,
+    };
   },
 });
 
