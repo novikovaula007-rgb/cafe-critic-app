@@ -50,6 +50,9 @@ export interface Place {
     overall: number;
   };
   reviews?: Review[];
+  overallRating: number;
+  reviewsCount: number;
+  photosCount: number;
 }
 
 export interface PlaceMutation {

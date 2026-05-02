@@ -22,7 +22,16 @@ const GalleryItem: React.FC<Props> = ({
   const isDeleting = deleteLoading === imageId;
 
   return (
-    <>
+    <Box
+      sx={{
+        position: 'relative',
+        transition: 'transform 0.3s ease',
+        borderRadius: '25px',
+        objectFit: 'cover',
+        boxShadow: '0 15px 35px rgba(0,0,0,0.1)',
+        '&:hover': { transform: 'scale(1.03)' },
+      }}
+    >
       <Box
         component="img"
         src={getImage(image)}
@@ -33,34 +42,40 @@ const GalleryItem: React.FC<Props> = ({
           borderRadius: '25px',
           objectFit: 'cover',
           boxShadow: '0 15px 35px rgba(0,0,0,0.1)',
-          '&:hover': { transform: 'scale(1.05)' },
         }}
       />
-
       {user?.role === 'admin' && (
         <IconButton
           className="delete-btn"
-          onClick={() => onDelete(imageId)}
+          onClick={(e) => {
+            e.preventDefault();
+            onDelete(imageId);
+          }}
           disabled={!!deleteLoading}
           sx={{
             position: 'absolute',
-            top: 8,
-            right: 8,
-            bgcolor: 'rgba(255,255,255,0.9)',
-            color: 'error.main',
-            opacity: 0,
-            transition: 'opacity 0.2s',
-            '&:hover': { bgcolor: '#fff' },
+            zIndex: 20,
+            right: '10px',
+            top: '10px',
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            backdropFilter: 'blur(8px)',
+            color: 'error.light',
+            transition: '0.2s',
+            '&:hover': {
+              backgroundColor: 'error.main',
+              color: 'white',
+            },
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           }}
         >
           {isDeleting ? (
-            <CircularProgress size={20} color="inherit" />
+            <CircularProgress size={24} color="inherit" />
           ) : (
             <DeleteIcon fontSize="small" />
           )}
         </IconButton>
       )}
-    </>
+    </Box>
   );
 };
 

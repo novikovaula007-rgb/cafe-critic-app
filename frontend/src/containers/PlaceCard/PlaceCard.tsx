@@ -158,7 +158,6 @@ const PlaceCard: React.FC<Props> = ({
                 color: 'text.secondary',
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 minHeight: '3em',
