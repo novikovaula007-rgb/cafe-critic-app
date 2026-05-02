@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import type { ReviewMutation } from '../../types';
+import { toast } from 'react-toastify';
 
 interface Props {
   onSubmit: (mutation: ReviewMutation) => void;
@@ -35,6 +36,11 @@ const ReviewForm: React.FC<Props> = ({ onSubmit, loading }) => {
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(state);
+    if (!state.comment) {
+      toast.error('You have not filled in all the required fields.');
+      return;
+    }
+
     setState({
       comment: '',
       qualityOfFood: 5,

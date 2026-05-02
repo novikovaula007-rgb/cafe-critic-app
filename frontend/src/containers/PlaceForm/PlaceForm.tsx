@@ -36,8 +36,8 @@ const PlaceForm = () => {
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!state.mainPhoto) {
-      toast.error('Please upload a main photo!');
+    if (!state.mainPhoto || !state.title || !state.description) {
+      toast.error('You have not filled in all the required fields.');
       return;
     }
 
