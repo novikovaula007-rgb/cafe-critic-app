@@ -1,41 +1,33 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
   persistReducer,
   persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
   PURGE,
   REGISTER,
-  REHYDRATE,
 } from 'redux-persist';
+import storage from 'redux-persist/es/storage';
+import { usersSlice } from '../features/users/usersSlice';
+import { placesReducer } from '../features/places/placesSlice.ts';
 
-const storage = {
-  getItem: (key: string) => {
-    return Promise.resolve(localStorage.getItem(key));
-  },
-  setItem: (key: string, value: string) => {
-    localStorage.setItem(key, value);
-    return Promise.resolve(value);
-  },
-  removeItem: (key: string) => {
-    localStorage.removeItem(key);
-    return Promise.resolve();
-  },
-};
+const usersReducer = usersSlice.reducer;
 
-const rootReducer = combineReducers({});
-
-const persistConfig = {
-  key: 'root',
+const userPersistConfig = {
+  key: 'store:users',
   storage,
-  whitelist: ['users'],
+  whitelist: ['user'],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const rootReducer = combineReducers({
+  places: placesReducer,
+  users: persistReducer(userPersistConfig, usersReducer),
+});
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

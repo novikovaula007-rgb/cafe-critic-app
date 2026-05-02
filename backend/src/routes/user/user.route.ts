@@ -55,7 +55,7 @@ usersRouter.post(
     const { email, password } = req.body;
 
     try {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email }).select('+password');
 
       if (!user) {
         return res.status(404).json({ error: 'User is not found' });
@@ -124,7 +124,7 @@ usersRouter.post(
       const user = await User.findOne({
         _id: decoded._id,
         refreshToken,
-      });
+      }).select('+refreshToken');
 
       if (!user) {
         return res.status(401).json({
