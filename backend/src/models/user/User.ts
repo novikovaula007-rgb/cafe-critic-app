@@ -8,13 +8,13 @@ import {
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 import { UserMethods } from './types/model.types';
-import type { User } from '../../types/user/user.types';
+import type { UserFields } from '../../types/user/user.types';
 import regex from './regex/regex';
 import config from '../../config';
 
-type UserModel = Model<User, {}, UserMethods>;
+type UserModel = Model<UserFields, {}, UserMethods>;
 
-const UserSchema = new Schema<HydratedDocument<User>, UserModel, UserMethods>({
+const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMethods>({
   email: {
     type: String,
     required: true,

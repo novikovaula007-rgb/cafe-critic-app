@@ -1,4 +1,4 @@
-export interface User {
+export interface UserFields {
   email: string;
   displayName: string;
   password: string;
@@ -6,5 +6,5 @@ export interface User {
   refreshToken: string;
 }
 
-export type UserSave = Omit<User, 'role'>;
-export type UserReg = Omit<User, 'role' | 'refreshToken' | 'googleID'>;
+export type UserSave = Omit<UserFields, 'role'>;
+export type UserReg = Omit<UserFields, 'role' | 'refreshToken' | 'googleID'>;
