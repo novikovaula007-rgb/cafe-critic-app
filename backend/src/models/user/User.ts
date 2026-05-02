@@ -14,7 +14,11 @@ import config from '../../config';
 
 type UserModel = Model<UserFields, {}, UserMethods>;
 
-const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMethods>({
+const UserSchema = new Schema<
+  HydratedDocument<UserFields>,
+  UserModel,
+  UserMethods
+>({
   email: {
     type: String,
     required: true,
@@ -50,7 +54,7 @@ const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMetho
 });
 
 UserSchema.pre('save', async function () {
-  if (!this.isModified('password')) return;
+  if (!this.isModified('password') || !this.password) return;
 
   const hash = await argon2.hash(this.password);
   return (this.password = hash);
@@ -63,7 +67,8 @@ UserSchema.set('toJSON', {
   },
 });
 
-UserSchema.methods.checkPassword = function (password) {
+UserSchema.methods.checkPassword = async function (password) {
+  if (!this.password) return false;
   return argon2.verify(this.password, password);
 };
 
