@@ -95,9 +95,6 @@ export const selectPlacesCreateLoading = (state: RootState) =>
   state.places.createLoading;
 export const selectPlacesDeleteLoading = (state: RootState) =>
   state.places.deleteLoading;
-export const selectPlacesError = (state: RootState) => state.places.error;
-export const selectPlacesCreateError = (state: RootState) =>
-  state.places.createError;
 export const selectOnePlace = (state: RootState): Place | null =>
   state.places.onePlace;
 export const selectPlaceFetchLoading = (state: RootState): boolean =>

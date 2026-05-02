@@ -47,7 +47,7 @@ const PlaceForm = () => {
     }
 
     try {
-      await dispatch(createPlace(state)).unwrap();
+      await dispatch(createPlace({ ...state, agreement })).unwrap();
       navigate('/');
     } catch (error) {
       console.error(error);

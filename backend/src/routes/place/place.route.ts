@@ -20,7 +20,7 @@ placesRouter.post(
     try {
       const { user } = req as RequestWithUser;
 
-      if (!req.body.agreement) {
+      if (!req.body.agreement || req.body.agreement !== 'true') {
         return res.status(400).json({
           error: 'You must agree to the establishment terms of publication',
         });

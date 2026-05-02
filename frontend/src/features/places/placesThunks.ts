@@ -33,6 +33,7 @@ export const createPlace = createAsyncThunk<
     const formData = new FormData();
     formData.append('title', placeMutation.title);
     formData.append('description', placeMutation.description);
+    formData.append('agreement', String(placeMutation.agreement || false));
 
     if (placeMutation.mainPhoto) {
       formData.append('mainPhoto', placeMutation.mainPhoto);

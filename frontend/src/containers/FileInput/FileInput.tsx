@@ -61,7 +61,17 @@ const FileInput: React.FC<Props> = ({
           />
         </Grid>
         <Grid>
-          <Button variant="contained" onClick={activateInput}>
+          <Button
+            variant="contained"
+            onClick={activateInput}
+            sx={{
+              py: 1.5,
+              px: 4,
+              borderRadius: '15px',
+              textTransform: 'none',
+              fontWeight: 700,
+            }}
+          >
             Browse
           </Button>
         </Grid>
