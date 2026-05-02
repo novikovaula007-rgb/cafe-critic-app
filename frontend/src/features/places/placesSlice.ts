@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchPlaces, createPlace, deletePlace } from './placesThunks';
+import {
+  fetchPlaces,
+  createPlace,
+  deletePlace,
+  fetchOnePlace,
+} from './placesThunks';
 import type { RootState } from '../../app/store';
 import type { GlobalError, Place, ValidationError } from '../../types';
 
 interface PlacesState {
   items: Place[];
+  onePlace: Place | null;
   fetchLoading: boolean;
   createLoading: boolean;
+  fetchOneLoading: boolean;
   deleteLoading: string | false;
   error: GlobalError | null;
   createError: ValidationError | null;
@@ -14,9 +21,11 @@ interface PlacesState {
 
 const initialState: PlacesState = {
   items: [],
+  onePlace: null,
   fetchLoading: false,
   createLoading: false,
   deleteLoading: false,
+  fetchOneLoading: false,
   error: null,
   createError: null,
 };
@@ -63,10 +72,23 @@ export const placesSlice = createSlice({
       .addCase(deletePlace.rejected, (state) => {
         state.deleteLoading = false;
       });
+
+    builder
+      .addCase(fetchOnePlace.pending, (state) => {
+        state.fetchOneLoading = true;
+        state.onePlace = null;
+      })
+      .addCase(fetchOnePlace.fulfilled, (state, { payload }) => {
+        state.fetchOneLoading = false;
+        state.onePlace = payload;
+      })
+      .addCase(fetchOnePlace.rejected, (state) => {
+        state.fetchOneLoading = false;
+      });
   },
 });
 
-export const selectPlaces = (state: RootState) => state.places.items;
+export const selectPlaces = (state: RootState): Place[] => state.places.items;
 export const selectPlacesFetchLoading = (state: RootState) =>
   state.places.fetchLoading;
 export const selectPlacesCreateLoading = (state: RootState) =>
@@ -76,5 +98,9 @@ export const selectPlacesDeleteLoading = (state: RootState) =>
 export const selectPlacesError = (state: RootState) => state.places.error;
 export const selectPlacesCreateError = (state: RootState) =>
   state.places.createError;
+export const selectOnePlace = (state: RootState): Place | null =>
+  state.places.onePlace;
+export const selectPlaceFetchLoading = (state: RootState): boolean =>
+  state.places.fetchOneLoading;
 
 export const placesReducer = placesSlice.reducer;

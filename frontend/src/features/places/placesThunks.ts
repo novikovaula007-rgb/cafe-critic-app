@@ -1,7 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosAPI from '../../axiosAPI';
 import { isAxiosError } from 'axios';
-import type { GlobalError, Place, PlaceMutation, ValidationError } from '../../types';
+import type {
+  GlobalError,
+  Place,
+  PlaceMutation,
+  ValidationError,
+} from '../../types';
 
 export const fetchPlaces = createAsyncThunk<
   Place[],
@@ -49,6 +54,22 @@ export const deletePlace = createAsyncThunk<
 >('places/delete', async (placeId, { rejectWithValue }) => {
   try {
     await axiosAPI.delete(`/places/${placeId}`);
+  } catch (e) {
+    if (isAxiosError(e) && e.response) {
+      return rejectWithValue(e.response.data as GlobalError);
+    }
+    throw e;
+  }
+});
+
+export const fetchOnePlace = createAsyncThunk<
+  Place,
+  string,
+  { rejectValue: GlobalError }
+>('places/fetchOne', async (id, { rejectWithValue }) => {
+  try {
+    const response = await axiosAPI.get<Place>(`/places/${id}`);
+    return response.data;
   } catch (e) {
     if (isAxiosError(e) && e.response) {
       return rejectWithValue(e.response.data as GlobalError);

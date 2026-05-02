@@ -54,6 +54,7 @@ export const usersSlice = createSlice({
 export const { unsetUser } = usersSlice.actions;
 
 export const selectUser = (state: { users: UsersState }) => state.users.user;
-export const selectLoginError = (state: { users: UsersState }) => state.users.loginError;
+export const selectLoginError = (state: { users: UsersState }) =>
+  state.users.loginError;
 
 export default usersSlice.reducer;

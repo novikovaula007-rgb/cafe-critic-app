@@ -9,6 +9,7 @@ import {
   FormHelperText,
   FormControlLabel,
   Checkbox,
+  Container,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import type { PlaceMutation } from '../../types';
@@ -30,7 +31,6 @@ const PlaceForm = () => {
     title: '',
     description: '',
     mainPhoto: null,
-    agreement: false,
   });
 
   const submitFormHandler = async (e: React.FormEvent) => {
@@ -75,95 +75,137 @@ const PlaceForm = () => {
   };
 
   return (
-    <Paper
-      elevation={3}
-      sx={{ p: 4, maxWidth: '600px', mx: 'auto', mt: 4, borderRadius: 3 }}
-    >
-      <Typography
-        variant="h5"
-        sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}
+    <Container maxWidth="sm" sx={{ py: 6 }}>
+      <Paper
+        elevation={0}
+        sx={{
+          p: { xs: 4, md: 4 },
+          borderRadius: '30px',
+          boxShadow: '0 20px 50px rgba(0,0,0,0.08)',
+        }}
       >
-        Add New Place
-      </Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 3,
+            fontWeight: 800,
+            textAlign: 'center',
+            color: '#2D3436',
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Add New Place
+        </Typography>
 
-      <Box component="form" onSubmit={submitFormHandler}>
-        <Stack spacing={3}>
-          <TextField
-            fullWidth
-            label="Title"
-            name="title"
-            variant="outlined"
-            value={state.title}
-            onChange={inputChangeHandler}
-            required
-            sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-          />
-
-          <TextField
-            fullWidth
-            multiline
-            rows={4}
-            label="Description"
-            name="description"
-            variant="outlined"
-            value={state.description}
-            onChange={inputChangeHandler}
-            required
-            sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
-          />
-
-          <FileInput
-            label="Main photo"
-            name="mainPhoto"
-            onChange={fileChangeHandler}
-          />
-
-          <Box>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              By submitting this form, you agree that the following information
-              will be submitted to the public domain, and administrators of this
-              site will have full control over the said information.
-            </Typography>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={agreement}
-                  onChange={(e) => {
-                    setAgreement(e.target.checked);
-                    setError(false);
-                  }}
-                  color="primary"
-                />
-              }
-              label="I understand"
+        <Box component="form" onSubmit={submitFormHandler}>
+          <Stack sx={{ gap: 2 }}>
+            <TextField
+              fullWidth
+              label="Title"
+              name="title"
+              value={state.title}
+              onChange={inputChangeHandler}
+              required
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '15px',
+                  backgroundColor: '#fff',
+                },
+              }}
             />
-            {error && (
-              <FormHelperText error>
-                You must agree before submitting
-              </FormHelperText>
-            )}
-          </Box>
 
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            disabled={loading}
-            sx={{
-              py: 1.5,
-              borderRadius: 2,
-              textTransform: 'none',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              boxShadow: 3,
-              '&:hover': { boxShadow: 5 },
-            }}
-          >
-            {loading ? 'Loading...' : 'Create place'}
-          </Button>
-        </Stack>
-      </Box>
-    </Paper>
+            <TextField
+              fullWidth
+              multiline
+              rows={2}
+              label="Description"
+              name="description"
+              value={state.description}
+              onChange={inputChangeHandler}
+              required
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '15px',
+                  backgroundColor: '#fff',
+                },
+              }}
+            />
+
+            <FileInput
+              label="Main photo"
+              name="mainPhoto"
+              onChange={fileChangeHandler}
+            />
+
+            <Box
+              sx={{
+                p: 2.5,
+                borderRadius: '18px',
+                backgroundColor: error
+                  ? 'rgba(211, 47, 47, 0.04)'
+                  : 'rgba(0, 0, 0, 0.02)',
+                border: '1px solid',
+                borderColor: error ? 'error.light' : 'transparent',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  color: 'text.secondary',
+                  mb: 1.5,
+                  lineHeight: 1.5,
+                  fontSize: '0.85rem',
+                }}
+              >
+                By submitting this form, you agree that this information will be
+                submitted to the public domain, and administrators will have
+                full control over it.
+              </Typography>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={agreement}
+                    onChange={(e) => {
+                      setAgreement(e.target.checked);
+                      setError(false);
+                    }}
+                    sx={{
+                      color: error ? 'error.main' : 'primary.main',
+                      '&.Mui-checked': { color: 'primary.main' },
+                    }}
+                  />
+                }
+                label={
+                  <Typography sx={{ fontSize: '0.9rem', fontWeight: 600 }}>
+                    I understand and agree
+                  </Typography>
+                }
+              />
+              {error && (
+                <FormHelperText error sx={{ ml: 1, fontWeight: 500 }}>
+                  You must agree before submitting
+                </FormHelperText>
+              )}
+            </Box>
+
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={loading}
+              sx={{
+                py: 2,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: 700,
+              }}
+            >
+              {loading ? 'Loading...' : 'Create place'}
+            </Button>
+          </Stack>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

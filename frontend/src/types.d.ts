@@ -43,13 +43,13 @@ export interface Place {
   title: string;
   description: string;
   mainPhoto: string | null;
-  qualityOfFood?: number;
-  serviceQuality?: number;
-  interior?: number;
-  overall?: number;
-  overallRating: number;
-  reviewsCount: number;
-  photosCount: number;
+  ratings?: {
+    qualityOfFood: number;
+    serviceQuality: number;
+    interior: number;
+    overall: number;
+  };
+  reviews?: Review[];
 }
 
 export interface PlaceMutation {
@@ -81,7 +81,7 @@ export interface Review {
 }
 
 export interface ReviewMutation {
-  placeId: string;
+  placeId?: string;
   comment: string;
   qualityOfFood: number;
   serviceQuality: number;
