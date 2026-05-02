@@ -1,25 +1,35 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FC } from 'react';
-import styles from './FileInput.module.css';
-import CONTENT_PLACEHOLDER from '@assets/placeholders/content_pl.png';
+import React, { useRef, useState } from 'react';
+import { Button, Grid, TextField } from '@mui/material';
 
-interface IFileInputProps {
+interface Props {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   label: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  multiple?: boolean;
 }
 
-const FileInput: FC<IFileInputProps> = ({ name, label, onChange }) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [_fileName, setFileName] = useState<string | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+const FileInput: React.FC<Props> = ({
+  onChange,
+  name,
+  label,
+  multiple = false,
+}) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [filename, setFilename] = useState('');
 
-  useEffect(() => {
-    return () => {
-      if (preview) {
-        URL.revokeObjectURL(preview);
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      if (multiple) {
+        setFilename(`Select files: ${e.target.files.length}`);
+      } else {
+        setFilename(e.target.files[0].name);
       }
-    };
-  }, [preview]);
+    } else {
+      setFilename('');
+    }
+
+    onChange(e);
+  };
 
   const activateInput = () => {
     if (inputRef.current) {
@@ -27,44 +37,32 @@ const FileInput: FC<IFileInputProps> = ({ name, label, onChange }) => {
     }
   };
 
-  const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setFileName(file.name);
-
-      if (file.type.startsWith('image/')) {
-        const objectUrl = URL.createObjectURL(file);
-        setPreview(objectUrl);
-      } else {
-        setPreview(null);
-      }
-    } else {
-      setFileName(null);
-      setPreview(null);
-    }
-
-    onChange(event);
-  };
-
   return (
     <>
       <input
+        style={{ display: 'none' }}
         type="file"
-        title="image"
         name={name}
-        ref={inputRef}
+        multiple={multiple}
         onChange={onFileChange}
-        accept="image/*"
-        className={styles.input__file}
+        ref={inputRef}
       />
-
-      <label className={styles.input__label} onClick={activateInput}>
-        <img
-          src={preview || CONTENT_PLACEHOLDER}
-          alt={label}
-          className={styles.input__image}
-        />
-      </label>
+      <Grid direction="row" spacing={2}>
+        <Grid>
+          <TextField
+            disabled
+            label={label}
+            value={filename}
+            onClick={activateInput}
+            fullWidth
+          />
+        </Grid>
+        <Grid>
+          <Button variant="contained" onClick={activateInput}>
+            Browse
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 };
