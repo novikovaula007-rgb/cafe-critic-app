@@ -51,7 +51,7 @@ placesRouter.post(
 
 placesRouter.get('/', async (req, res, next) => {
   try {
-    const places = await Place.find().lean();
+    const places = await Place.find().populate('user').lean();
 
     const placesWithStats = await Promise.all(
       places.map(async (place) => {
@@ -86,7 +86,7 @@ placesRouter.get('/:id', async (req, res, next) => {
   }
 
   try {
-    const place = await Place.findById(req.params.id);
+    const place = await Place.findById(req.params.id).populate('user');
 
     if (!place) {
       return res.status(404).json({ error: 'Place not found' });
@@ -132,3 +132,5 @@ placesRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
     next();
   }
 });
+
+export default placesRouter;

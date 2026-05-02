@@ -14,12 +14,16 @@ const usersRouter = Router();
 usersRouter.post(
   '/',
   async (req: Request, res: Response, next: NextFunction) => {
-    const body: UserReg = req.body;
+    const { email, displayName, password } = req.body;
+
+    if (!email || !displayName || !password) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
 
     const correctUserData: UserReg = {
-      email: body.email,
-      displayName: body.displayName,
-      password: body.password,
+      email,
+      displayName,
+      password,
     };
 
     try {

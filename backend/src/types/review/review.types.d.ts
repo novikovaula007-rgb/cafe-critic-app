@@ -7,6 +7,7 @@ export interface ReviewFields {
   serviceQuality: number;
   interior: number;
   comment: string;
+  createdAt: string | Date;
   author: string | UserFields | Schema.Types.ObjectId;
   place: string | PlaceFields | Schema.Types.ObjectId;
 }
