@@ -87,12 +87,12 @@ const ReviewsList: React.FC<Props> = ({
               textAlign: 'center',
               bgcolor: 'rgba(76, 175, 80, 0.05)',
               borderRadius: '20px',
-              border: '1px dashed',
+              border: '1px',
               borderColor: 'success.light',
             }}
           >
             <Typography sx={{ color: 'success.main', fontWeight: 600 }}>
-              You have already shared your review for this place. Thank you!
+              You have already shared your review for this place.
             </Typography>
           </Box>
         )

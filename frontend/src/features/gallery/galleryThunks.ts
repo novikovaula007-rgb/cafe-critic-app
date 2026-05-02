@@ -41,3 +41,11 @@ export const deleteImage = createAsyncThunk<
     throw e;
   }
 });
+
+export const fetchGallery = createAsyncThunk<GalleryImage[], string>(
+  'gallery/fetchByPlace',
+  async (placeId) => {
+    const { data } = await axiosAPI.get<GalleryImage[]>(`/gallery/${placeId}`);
+    return data;
+  },
+);

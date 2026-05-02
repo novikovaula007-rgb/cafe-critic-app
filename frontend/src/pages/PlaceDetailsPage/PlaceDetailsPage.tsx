@@ -29,6 +29,17 @@ import {
 } from '../../features/reviews/reviewsThunks.ts';
 import ReviewsList from '../../containers/ReviewsList/ReviewsList.tsx';
 import StarIcon from '@mui/icons-material/Star';
+import Gallery from '../../containers/Gallery/Gallery.tsx';
+import {
+  selectGalleryDeleteLoading,
+  selectGalleryItems,
+  selectGalleryUploadLoading,
+} from '../../features/gallery/gallerySlice.ts';
+import {
+  deleteImage,
+  fetchGallery,
+  uploadImages,
+} from '../../features/gallery/galleryThunks.ts';
 
 const PlaceDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -40,9 +51,14 @@ const PlaceDetailsPage = () => {
   const createLoading = useAppSelector(selectReviewsCreateLoading);
   const deleteLoading = useAppSelector(selectReviewsDeleteLoading);
 
+  const galleryItems = useAppSelector(selectGalleryItems);
+  const uploadLoading = useAppSelector(selectGalleryUploadLoading);
+  const galleryDeleteLoading = useAppSelector(selectGalleryDeleteLoading);
+
   useEffect(() => {
     if (id) {
       dispatch(fetchOnePlace(id));
+      dispatch(fetchGallery(id));
     }
   }, [dispatch, id]);
 
@@ -65,6 +81,18 @@ const PlaceDetailsPage = () => {
       } catch (e) {
         console.error(e);
       }
+    }
+  };
+
+  const handleGalleryUpload = async (files: File[]) => {
+    if (id) {
+      await dispatch(uploadImages({ images: files, placeId: id })).unwrap();
+    }
+  };
+
+  const handleImageDelete = async (imageId: string) => {
+    if (window.confirm('Delete this photo?')) {
+      await dispatch(deleteImage(imageId)).unwrap();
     }
   };
 
@@ -124,6 +152,14 @@ const PlaceDetailsPage = () => {
               }}
             />
           </Stack>
+
+          <Gallery
+            items={galleryItems}
+            uploadLoading={uploadLoading}
+            deleteLoading={galleryDeleteLoading}
+            onUpload={handleGalleryUpload}
+            onDelete={handleImageDelete}
+          />
 
           <Box>
             <Typography

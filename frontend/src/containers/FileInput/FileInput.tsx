@@ -44,11 +44,14 @@ const FileInput: React.FC<Props> = ({
         type="file"
         name={name}
         multiple={multiple}
-        onChange={onFileChange}
         ref={inputRef}
+        onChange={onFileChange}
+        onClick={(e) => {
+          (e.target as HTMLInputElement).value = '';
+        }}
       />
       <Grid spacing={2}>
-        <Grid sx={{mb: 1}}>
+        <Grid sx={{ mb: 1 }}>
           <TextField
             disabled
             label={label}

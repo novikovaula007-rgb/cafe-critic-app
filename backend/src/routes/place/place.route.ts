@@ -29,7 +29,7 @@ placesRouter.post(
       const newPlace = new Place({
         title: req.body.title,
         description: req.body.description,
-        mainPhoto: req.file ? req.file.filename : null,
+        mainPhoto: req.file ? 'uploads/' + req.file.filename : null,
         user: user._id,
       });
 

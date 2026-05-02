@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { uploadImages, deleteImage } from './galleryThunks';
+import { uploadImages, deleteImage, fetchGallery } from './galleryThunks';
 import type { RootState } from '../../app/store';
 import type { GalleryImage, GlobalError } from '../../types';
 
 interface GalleryState {
   items: GalleryImage[];
+  fetchLoading: boolean;
   uploadLoading: boolean;
   deleteLoading: string | false;
   error: GlobalError | null;
@@ -12,6 +13,7 @@ interface GalleryState {
 
 const initialState: GalleryState = {
   items: [],
+  fetchLoading: false,
   uploadLoading: false,
   deleteLoading: false,
   error: null,
@@ -50,6 +52,18 @@ export const gallerySlice = createSlice({
       })
       .addCase(deleteImage.rejected, (state) => {
         state.deleteLoading = false;
+      });
+
+    builder
+      .addCase(fetchGallery.pending, (state) => {
+        state.fetchLoading = true;
+      })
+      .addCase(fetchGallery.fulfilled, (state, { payload }) => {
+        state.fetchLoading = false;
+        state.items = payload;
+      })
+      .addCase(fetchGallery.rejected, (state) => {
+        state.fetchLoading = false;
       });
   },
 });

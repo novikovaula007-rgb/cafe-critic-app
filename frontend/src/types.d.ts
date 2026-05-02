@@ -87,3 +87,7 @@ export interface ReviewMutation {
   serviceQuality: number;
   interior: number;
 }
+
+export interface GalleryMutation {
+  images: File[];
+}

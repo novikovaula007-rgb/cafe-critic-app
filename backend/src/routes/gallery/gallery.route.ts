@@ -27,7 +27,7 @@ galleryRouter.post(
       }
 
       const imageData = files.map((file) => ({
-        url: file.filename,
+        url: 'uploads/' + file.filename,
         place: id,
         user: user._id,
       }));
@@ -51,6 +51,25 @@ galleryRouter.delete('/:id', auth, permit('admin'), async (req, res, next) => {
   try {
     await Image.findByIdAndDelete(id);
     res.send({ message: 'Deleted successfully' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+galleryRouter.get('/:id', async (req, res, next) => {
+  const { id } = req.params;
+
+  if (!isValidObjectId(id) || !id) {
+    return res.status(400).json({ error: 'Invalid place ID' });
+  }
+
+  try {
+    const images = await Image.find({ place: id }).populate(
+      'user',
+      'displayName',
+    );
+
+    res.json(images);
   } catch (error) {
     next(error);
   }
