@@ -47,8 +47,8 @@ const FileInput: React.FC<Props> = ({
         onChange={onFileChange}
         ref={inputRef}
       />
-      <Grid direction="row" spacing={2}>
-        <Grid>
+      <Grid spacing={2}>
+        <Grid sx={{mb: 1}}>
           <TextField
             disabled
             label={label}

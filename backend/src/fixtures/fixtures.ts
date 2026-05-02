@@ -66,19 +66,19 @@ const run = async () => {
   const places = await Place.create([
     {
       title: 'Kulikov',
-      description: 'A leader in the production of safe and delicious desserts.',
+      description: 'A legendary confectionery house known for its uncompromising commitment to quality. Every dessert is a masterpiece, crafted using natural ingredients and traditional recipes. From signature cakes to delicate pastries, we offer a leader in the production of safe, healthy, and incredibly delicious treats for the whole family.',
       mainPhoto: '/fixtures/kulikov_main.jpg',
       user: admin!._id,
     },
     {
       title: 'Pizza Queen',
-      description: 'Authentic street food experience.',
+      description: 'Experience the soul of Italian street food right in the heart of the city. We specialize in authentic, wood-fired pizzas with a thin, crispy crust and premium toppings. Whether you are looking for a quick lunch or a cozy spot to hang out with friends, Pizza Queen delivers the ultimate urban dining vibe and bold flavors.',
       mainPhoto: '/fixtures/pizza_main.jpg',
       user: user1!._id,
     },
     {
       title: 'Tokyo Zen',
-      description: 'Premium sushi and rolls.',
+      description: 'Immerse yourself in an atmosphere of tranquility and refined taste. Tokyo Zen offers a premium Japanese dining experience, featuring expertly prepared sushi, fresh sashimi, and innovative rolls. Our chefs use only the finest seafood, ensuring that every bite reflects the harmony and precision of traditional Japanese culinary arts.',
       mainPhoto: '/fixtures/sushi_main.jpg',
       user: user2!._id,
     },

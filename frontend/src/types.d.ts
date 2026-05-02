@@ -43,10 +43,47 @@ export interface Place {
   title: string;
   description: string;
   mainPhoto: string | null;
+  qualityOfFood?: number;
+  serviceQuality?: number;
+  interior?: number;
+  overall?: number;
+  overallRating: number;
+  reviewsCount: number;
+  photosCount: number;
 }
 
 export interface PlaceMutation {
   title: string;
   description: string;
   mainPhoto: File | null;
+  agreement?: boolean;
+}
+
+export interface GalleryImage {
+  _id: string;
+  url: string;
+  place: string;
+  user: string;
+}
+
+export interface Review {
+  _id: string;
+  comment: string;
+  qualityOfFood: number;
+  serviceQuality: number;
+  interior: number;
+  author: {
+    _id: string;
+    displayName: string;
+  };
+  place: string;
+  createdAt: string;
+}
+
+export interface ReviewMutation {
+  placeId: string;
+  comment: string;
+  qualityOfFood: number;
+  serviceQuality: number;
+  interior: number;
 }

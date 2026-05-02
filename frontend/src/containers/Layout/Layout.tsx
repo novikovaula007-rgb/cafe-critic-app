@@ -6,7 +6,7 @@ const Layout = () => {
   return (
     <>
       <AppToolbar />
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container maxWidth="lg" sx={{ py: 2 }}>
         <Outlet />
       </Container>
     </>

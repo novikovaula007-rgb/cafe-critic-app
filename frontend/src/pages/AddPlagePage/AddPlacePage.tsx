@@ -1,5 +1,7 @@
+import NewPlaceForm from '../../containers/PlaceForm/PlaceForm.tsx';
+
 const AddPlacePage = () => {
-  return <div></div>;
+  return <NewPlaceForm/>;
 };
 
 export default AddPlacePage;
