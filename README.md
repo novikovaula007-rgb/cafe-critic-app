@@ -1,21 +1,21 @@
-# Cafe Critic App 🍽️
+# Cafe Critic App
 
 Cafe Critic is a full-stack web application that allows users to discover, review, and share their experiences at various cafes and eateries. Built with a robust backend powered by Node.js, Express, and TypeScript, and a dynamic frontend using React, TypeScript, and Vite, this application provides a seamless platform for food enthusiasts.
 
 --- 
 
-## 🚀 Features
+## Features
 
-*   **User Authentication:** Secure registration and login system to manage user accounts. 🔐
-*   **Place Management:** Add, view, and delete cafe/restaurant listings. 📝
-*   **Review System:** Users can leave detailed reviews with ratings for food quality, service, and interior. 🌟
+*   **User Authentication:** Secure registration and login system to manage user accounts. 
+*   **Place Management:** Add, view, and delete cafe/restaurant listings. 
+*   **Review System:** Users can leave detailed reviews with ratings for food quality, service, and interior. 
 *   **Image Uploads:** Support for uploading multiple images per place to showcase the venue.
-*   **Admin Panel:** Administrators have the ability to manage places and reviews. 🛡️
+*   **Admin Panel:** Administrators have the ability to manage places and reviews. 
 *   **Responsive Design:** A user-friendly interface built with Material UI, ensuring a great experience across all devices.
 
 --- 
 
-## 💻 Tech Stack
+## Tech Stack
 
 *   **Backend:** Node.js, Express, TypeScript, Mongoose, Argon2, JWT
 *   **Frontend:** React, TypeScript, Vite, Material UI, Redux Toolkit, React Router DOM, Zod, React Toastify, Axios
@@ -23,7 +23,7 @@ Cafe Critic is a full-stack web application that allows users to discover, revie
 
 --- 
 
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
 
@@ -73,7 +73,7 @@ Cafe Critic is a full-stack web application that allows users to discover, revie
 
 --- 
 
-## ▶️ Usage
+## Usage
 
 This application allows users to explore various cafes, read reviews, and contribute their own feedback. Registered users can add new places, upload photos, and write reviews. Administrators have additional privileges to manage content.
 
@@ -81,14 +81,14 @@ This application allows users to explore various cafes, read reviews, and contri
 
 1.  **Browsing Places:** Visit the homepage to see a list of recommended cafes with their ratings and review counts.
 2.  **Viewing Details:** Click on a place to see its description, images, overall ratings, and user reviews.
-3.  **Adding a New Place:** Logged-in users can add new cafes by providing a title, description, and a main photo. 📸
+3.  **Adding a New Place:** Logged-in users can add new cafes by providing a title, description, and a main photo. 
 4.  **Writing Reviews:** Logged-in users can leave reviews for places, including comments and ratings for food, service, and interior.
 5.  **Image Gallery:** Users can upload multiple images to a place's gallery to provide a visual overview.
 6.  **Authentication:** Users can register for a new account or log in to their existing account.
 
 --- 
 
-## 🔎 API Reference
+## API Reference
 
 ### Users
 
@@ -108,10 +108,3 @@ This application allows users to explore various cafes, read reviews, and contri
 
 *   `POST /api/reviews`: Create a new review (requires authentication).
 *   `GET /api/reviews?placeId=:id`: Get all reviews for a specific place.
-*   `DELETE /api/reviews/:id`: Delete a review (author or admin).
-
-### Gallery
-
-*   `POST /api/gallery/:id`: Upload images for a place (requires authentication).
-*   `DELETE /api/gallery/:id`: Delete an image (admin only).
-*   `GET /api/gallery/:id`: Get all images for a place.
